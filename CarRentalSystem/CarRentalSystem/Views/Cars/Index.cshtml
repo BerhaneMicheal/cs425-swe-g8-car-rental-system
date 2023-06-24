@@ -1,0 +1,57 @@
+﻿@model List<Car>
+@{
+
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <h2>Manage Cars</h2>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <a asp-controller="Cars" asp-action="Create" class="btn btn-primary">Add Car</a>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <td></td>
+                        <th>Brand</th>
+                        <th>Model</th>
+                        <th>Year</th>
+                        <th>Price Per Day</th>
+                        <th>Max Duration</th>
+                        <th>VIN</th>
+                        <th>Color</th>
+                        <th>Mileage</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var c in Model) {
+                        <tr>
+                            <td>@(Model.IndexOf(c)+1).</td>
+                            <td>
+                                <img src="@c.CarImages.First().ImagePath" class="img-fluid" style="width:120px;" />
+                            </td>
+                            <td>@c.CarType.Brand</td>
+                            <td>@c.CarType.Model</td>
+                            <td>@c.CarType.Year</td>
+                            <td>$@c.CarType.PricePerDay.ToString("G")</td>
+                            <td>@c.CarType.MaxDuration</td>
+                            <td>@c.Vin</td>
+                            <td>@c.Color</td>
+                            <td>@c.Mileage</td>
+                            <td>@c.Status</td>
+                            <td>
+                                <a asp-controller="Cars" asp-action="Edit" asp-route-id="@c.Id" class="btn btn-info btn-sm">Edit</a>
+                                <a asp-controller="Cars" asp-action="Delete" asp-route-id="@c.Id" class="btn btn-danger btn-sm">delete</a>
+                            </td>
+                        </tr>
+                     }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

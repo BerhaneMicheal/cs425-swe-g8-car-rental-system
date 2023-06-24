@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Create Car";
+    List<CarType> carTypes = ViewBag.carTypes as List<CarType>;
+}
+
+<div class="row">
+    <div class="col-lg-6 col-md-8">
+        <div class="card my-3">
+            <div class="card-header">
+                <h2>Add Car</h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Cars" asp-action="Create" id="carForm" enctype="multipart/form-data" method="post" >
+                    <div>
+                        <label>Car Type</label>
+                        <select name="carTypeId" class="form-select">
+                            <option value="">- Choose option -</option>
+                            @foreach(var c in carTypes) {
+                                    <option value="@c.Id">@c.Name</option>
+                                }
+                        </select>
+                    </div>
+                    <div class="mt-2">
+                        <label>VIN</label>
+                        <input type="text" name="vin" class="form-control" />
+                    </div>
+                    <div class="mt-2">
+                        <label>Color</label>
+                        <select name="color" class="form-select">
+                            <option value="">- Choose option -</option>
+                            <option value="Blue">Blue</option>
+                            <option value="Red">Red</option>
+                            <option value="Black">Black</option>
+                            <option value="Silver">Silver</option>
+                        </select>
+                    </div>
+                    <div class="mt-2">
+                        <label>Mileage</label>
+                        <input type="number" name="mileage" class="form-control" />
+                    </div>
+                    <div class="mt-2">
+                        <label for="formFile" class="form-label">Car Image</label>
+                        <input class="form-control" type="file" id="formFile" name="carImage" accept=".jpg, .png, .jpeg" />
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button type="submit" form="carForm" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+       
+    </div>
+</div>
+

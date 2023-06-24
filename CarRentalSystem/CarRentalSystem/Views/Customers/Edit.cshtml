@@ -1,0 +1,62 @@
+﻿@model Customer
+@{
+    ViewData["Title"] = "Edit Customer";
+}
+
+<div class="row">
+    <div class="col-lg-6 col-md-8">
+        <div class="card my-3">
+            <div class="card-header">
+                <h2>Edit Customer</h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Customers" asp-action="Update" id="customerForm" method="post">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="mt-2">
+                        <label>First Name</label>
+                        <input type="text" name="firstName" class="form-control" required asp-for="FirstName" />
+                    </div>
+                    <div class="mt-2">
+                        <label>Last Name</label>
+                        <input type="text" name="lastName" class="form-control" required asp-for="LastName" />
+                    </div>
+                    <div class="mt-2">
+                        <label>Email</label>
+                        <input type="text" name="email" class="form-control" required asp-for="Email"  />
+                    </div>
+                    <div class="mt-2">
+                        <label>Phone Number</label>
+                        <input type="text" name="phone" class="form-control" required asp-for="Phone" />
+                    </div>
+                    <div class="mt-2">
+                        <label>Driver's Licence Number</label>
+                        <input type="text" name="driverLicenceNumber" class="form-control" required asp-for="DriverLicenceNumber"  />
+                    </div>
+                    <h5>Address</h5>
+                    <hr />
+                    <div class="mt-2">
+                        <label>Street</label>
+                        <input type="text" name="address.street" class="form-control" required asp-for="Address.Street" />
+                    </div>
+                    <div class="mt-2">
+                        <label>City</label>
+                        <input type="text" name="address.city" class="form-control" required asp-for="Address.City"  />
+                    </div>
+                    <div class="mt-2">
+                        <label>Zip Code</label>
+                        <input type="text" name="address.zipCode" class="form-control" required asp-for="Address.ZipCode" />
+                    </div>
+                    <div class="mt-2">
+                        <label>State</label>
+                        <input type="text" name="address.state" class="form-control" required asp-for="Address.State" />
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button type="submit" form="customerForm" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,61 @@
+﻿@model List<Reservation>
+@{
+
+}
+
+
+<div class="card">
+    <div class="card-header">
+        <h2>Manage Reservations</h2>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Code</th>
+                        <th>Customer</th>
+                        <th>Car Name</th>
+                        <th>Car&nbsp;VIN</th>
+                        <th>Pickup Location</th>
+                        <th>Fee</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var r in Model)
+                    {
+                        <tr>
+                            <td>@(Model.IndexOf(r)+1).</td>
+                            <td>
+                                @r.Code
+                            </td>
+                            <td>@r.Customer.Name</td>
+                            <td>@r.Car.CarType.Name</td>
+                            <td>@r.Car.Vin</td>
+                            <td>@r.PickupLocation.ToString()</td>
+                            <td>$@r.ReservationFee.ToString("G")</td>
+                            <td>@r.StartDate.ToString("yyyy-dd-MM")</td>
+                            <td>@r.EndDate.ToString("yyyy-dd-MM")</td>
+                            <td>@r.Status</td>
+                            <td>
+                                <a asp-controller="Reservations" asp-action="Edit" asp-route-id="@r.Id" class="btn btn-info btn-sm">Edit</a>
+                                @if (r.Status == "PENDING")
+                                {
+                                    <a asp-controller="Reservations" asp-action="Cancel" asp-route-id="@r.Id" class="btn btn-danger btn-sm">Cancel</a>
+                                    <a asp-controller="Rentals" asp-action="CreateFromReservation" asp-route-reservationId="@r.Id" class="btn btn-success btn-sm">Rent</a>
+                                }
+
+                                @*<a asp-controller="Cars" asp-action="Delete" asp-route-id="@c.Id" class="btn btn-danger btn-sm">delete</a>*@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

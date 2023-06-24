@@ -1,0 +1,45 @@
+﻿@model Car
+@{
+    var rents = Model.Rentals.Count();
+    var reviews = Model.Rentals.Where(r => r.Review != null).Select(r => r.Review);
+    var image = Model.CarImages.First();
+}
+
+<div class="row">
+    <div class="col-lg-6 col-md-10">
+        <h1>@Model.CarType.Name</h1>
+        <hr />
+        <img src="@image.ImagePath" class="img-fluid" />
+        <p class="m-0">Color: @Model.Color</p>
+        <p class="m-0">Mileage: @Model.Mileage</p>
+        <p class="m-0">Status: @Model.Status</p><br />
+        <h5 class="py-2 m-0 rounded-pill bg-info d-inline-block my-2 px-3">$@Model.CarType.PricePerDay.ToString("G")</h5><br />
+        @if (authService.IsLoggedIn())
+        {
+            <a asp-controller="Reservations" asp-action="New" asp-route-carId="@Model.Id" class="btn btn-success px-4">Reserve Car</a>
+        }
+        else
+        {
+                <p class="alert alert-info">
+                    Login to reserve this car
+                </p>
+        }
+
+        <h4 class="mt-4">Reviews</h4>
+        <hr />
+        @foreach (var r in reviews)
+        {
+            <div>
+                <p>
+                    Rating:
+                    @for (var i = 0; i < r.Rating; i++)
+                    {
+                        <span>&#9733;</span>
+                    }
+                </p>
+                <p>Customer: @r.Rental.Customer.FirstName @r.Rental.Customer.LastName</p>
+                <p>Comment: @r.Comment</p>
+            </div>
+        }
+    </div>
+</div>
