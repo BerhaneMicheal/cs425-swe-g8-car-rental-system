@@ -1,0 +1,47 @@
+﻿@model List<Customer>
+@{
+
+}
+
+<h1>Customers</h1>
+<hr />
+<div class="table-responsive">
+    <a asp-controller="Customers" asp-action="Create" class="btn btn-primary">Register new customer</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>DriverLicenceNumber</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>ZipCode</th>
+                <th>State</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var c in Model) {
+                <tr>
+                    <td>@(Model.IndexOf(c)+1).</td>
+                    <td>@c.FirstName</td>
+                    <td>@c.LastName</td>
+                    <td>@c.Email</td>
+                    <td>@c.Phone</td>
+                    <td>@c.DriverLicenceNumber</td>
+                    <td>@c.Address.Street</td>
+                    <td>@c.Address.City</td>
+                    <td>@c.Address.ZipCode</td>
+                    <td>@c.Address.State</td>
+                    <td>
+                        <a asp-controller="Customers" asp-action="Edit" asp-route-id="@c.Id" class="btn btn-info btn-sm">Edit</a>
+                        <a asp-controller="Customers" asp-action="Delete" asp-route-id="@c.Id" class="btn btn-danger btn-sm">delete</a>
+                    </td>
+                </tr>
+             }
+        </tbody>
+    </table>
+</div>

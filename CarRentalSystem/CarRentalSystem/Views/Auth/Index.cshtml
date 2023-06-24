@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="row">
+    <div class="col-lg-6 col-md-8">
+        <div class="card my-3">
+            <div class="card-header">
+                <h2>Customer Login</h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Auth" asp-action="Login" id="loginForm" method="post">
+                    <div class="mt-2">
+                        <label>Email</label>
+                        <input type="email" name="email" class="form-control" required />
+                    </div>
+                    <div class="mt-2">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" required />
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button type="submit" form="loginForm" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+

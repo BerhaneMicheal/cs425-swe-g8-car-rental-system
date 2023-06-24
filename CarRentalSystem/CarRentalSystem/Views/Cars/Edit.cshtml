@@ -1,0 +1,66 @@
+﻿@model Car;
+@{
+    ViewData["Title"] = "Edit Car";
+    List<CarType> carTypes = ViewBag.carTypes as List<CarType>;
+}
+
+<div class="row">
+    <div class="col-lg-6 col-md-8">
+        <div class="card my-3">
+            <div class="card-header">
+                <h2>Edit Car</h2>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Cars" asp-action="Update" id="carForm" enctype="multipart/form-data" method="post">
+                    <input type="hidden" name="id" asp-for="Id" />
+                    <div>
+                        <label>Car Type</label>
+                        <select name="carTypeId" class="form-select" asp-for="CarTypeId">
+                            <option value="">- Choose option -</option>
+                            @foreach (var c in carTypes)
+                            {
+                                <option value="@c.Id">@c.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mt-2">
+                        <label>VIN</label>
+                        <input type="text" name="vin" class="form-control" asp-for="Vin" />
+                    </div>
+                    <div class="mt-2">
+                        <label>Color</label>
+                        <select name="color" class="form-select" asp-for="Color">
+                            <option value="">- Choose option -</option>
+                            <option value="Blue">Blue</option>
+                            <option value="Red">Red</option>
+                            <option value="Black">Black</option>
+                            <option value="Silver">Silver</option>
+                        </select>
+                    </div>
+                    <div class="mt-2">
+                        <label>Mileage</label>
+                        <input type="number" name="mileage" class="form-control" asp-for="Mileage" />
+                    </div>
+                    <div class="mt-2">
+                        <label for="formFile" class="form-label">Car Image (Optional: Upload to replace existing)</label>
+                        <input class="form-control" type="file" id="formFile" name="carImage" accept=".jpg, .png, .jpeg" />
+                    </div>
+                    <div class="mt-2">
+                        <label>Status</label>
+                        <select name="status" class="form-select" asp-for="Status">
+                            <option value="">- Choose option -</option>
+                            <option value="AVAILABLE">Available</option>
+                            <option value="RENTED">Rented</option>
+                            <option value="INACTIVE">Inactive</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer">
+                <button type="submit" form="carForm" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+

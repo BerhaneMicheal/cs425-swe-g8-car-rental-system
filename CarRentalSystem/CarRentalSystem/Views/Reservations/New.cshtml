@@ -1,0 +1,112 @@
+﻿@{
+    ViewData["Title"] = "Reserve Car";
+    Car car = (ViewBag.car as Car)!;
+    var locations = ViewBag.locations as List<PickupLocation>;
+    var carImage = car.CarImages.First();
+}
+
+<div class="row">
+    <div class="col-lg-8 col-md-10">
+        <div class="card my-3">
+            <div class="card-header">
+                <h2>Reserve Car</h2>
+            </div>
+            <div class="card-body">
+                <form id="reservationForm" method="post" asp-controller="Reservations" asp-action="New">
+                    <h4>@car.CarType.Name</h4>
+                    <img src="@carImage.ImagePath" class="img-fluid" />
+                    <p>Color: @car.Color</p>
+                    <p>Mileage: @car.Mileage</p>
+                    <p>Rent per day: $@car.CarType.PricePerDay.ToString("G")</p>
+                    <h4>Reservation Detail</h4>
+                    <hr />
+                    <input type="hidden" id="price" value="@car.CarType.PricePerDay" />
+                    <input type="hidden" id="carId" name="carId" value="@car.Id" />
+                    <div class="mt-2">
+                        <label>Pickup Location</label>
+                        <select name="pickupLocationId" class="form-select">
+                            <option value="">- Choose option -</option>
+                            @foreach (var l in locations)
+                            {
+                                <option value="@l.Id">@l.ToString()</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mt-2">
+                        <label>Start Date</label>
+                        <input type="date" id="startDate" name="startDate" class="form-control rdate" required />
+                    </div>
+                    <div class="mt-2">
+                        <label>End Date</label>
+                        <input type="date" id="endDate" name="endDate" class="form-control rdate" required />
+                    </div>
+                    <div class="mt-2">
+                        <label>Fee</label>
+                        <input type="text" id="reservationFee" name="reservationFee" value="@car.CarType.PricePerDay" readonly class="form-control" required />
+                    </div>
+                    <h4 class="mt-3">Card Details</h4>
+                    <hr />
+                    <div class="mt-2">
+                        <label>Card Number</label>
+                        <input type="number" class="form-control" required />
+                    </div>
+                    <div class="mt-2">
+                        <label>Expiry Date</label>
+                        <input type="text" class="form-control" required />
+                    </div>
+                    <div class="mt-2">
+                        <label>CVV</label>
+                        <input type="number" class="form-control" required />
+                    </div>
+                </form>
+                
+            </div>
+            <div class="card-footer">
+                <button type="submit" form="reservationForm" class="btn btn-primary">Pay and Reserve</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts{
+       <script>
+           $('.rdate').on('change', (e) => {
+               let startDate = $('#startDate').val();
+               let endDate = $('#endDate').val();
+
+               if (startDate != '' && endDate != '') {
+                   var st = new Date(startDate);
+                   var en = new Date(endDate);
+
+                   let diff = en - st;
+                   if ((new Date()) > st) {
+                       alert('Start date must be a current or future date!');
+                       $('#startDate').val('');
+                       $('#endDate').val('');
+
+                       $('#reservationFee').val($('#price').val());
+                   }
+                   if (diff < 0) {
+                       alert('End date must be same as or after the start date!');
+                       $('#startDate').val('');
+                       $('#endDate').val('');
+
+                       $('#reservationFee').val($('#price').val());
+                   } else {
+                       const days = calcDaysCount(st, en);
+                       console.log(days);
+                       let price = parseFloat($('#price').val());
+                       $('#reservationFee').val(price * days);
+                   }
+               }
+           });
+
+           function calcDaysCount(start, end) {
+               const diff = end - start;
+               const days = (((diff/1000) / 60) / 60) / 24;
+               if (days == 0) return 1;
+               return days+1;
+           }
+       </script>
+}
